@@ -1,0 +1,13 @@
+ul.users {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+ul.users input[type="radio"] {
+  margin-right: 10px;
+}
+
+ul.users input[type="radio"]:checked + label span {
+  background: #009933;
+}

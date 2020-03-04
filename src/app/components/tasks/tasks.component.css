@@ -1,0 +1,9 @@
+ul.tasks {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+ul.tasks button {
+    margin-right: 8px;
+}

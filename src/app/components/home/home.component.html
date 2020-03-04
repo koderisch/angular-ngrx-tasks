@@ -1,7 +1,38 @@
 <div class="row">
   <div class="col-md-4">
-    <h1>Task manager APP</h1>
-    <br/>
-    <p><a [routerLink]="['/login']" class="btn btn-primary">Log in</a></p>
+    <br />
+    <div *ngIf="loggedIn">
+      <p>
+        Logged in as user <em>{{ loggedIn.name }}</em>
+      </p>
+      <button (click)="logOutUser()" class="btn btn-primary">Log out</button>
+    </div>
+    <div *ngIf="!loggedIn">
+      <form (ngSubmit)="logInUser()" ngNativeValidate>
+        <ul class="users">
+          <li class="user-item" *ngFor="let user of users; let idx = index">
+            <input
+              type="radio"
+              name="name"
+              id="userb{{ idx }}"
+              value="{{ user.name }}"
+              required
+              [(ngModel)]="login.name"
+            />
+            <label for="userb{{ idx }}">
+              <span class="btn btn-secondary">{{ user.name }}</span>
+            </label>
+          </li>
+        </ul>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="login.password"
+          placeholder="enter your password"
+        />
+
+        <button type="submit" class="btn btn-primary">Log in</button>
+      </form>
+    </div>
   </div>
 </div>
