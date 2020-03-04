@@ -25,9 +25,12 @@ app.post("/api/login", (req, res, next) => {
 
 app.get("/api/tasks", (req, res, next) => {
   res.json([
-    { _id: 1, name: "task1", assigned_user_id: 1 },
-    { _id: 2, name: "task2", assigned_user_id: null },
-    { _id: 3, name: "task3", assigned_user_id: 2 }
+    { _id: 1, name: "Identify the implementation team", status: 0, assigned_user_id: 1 },
+    { _id: 2, name: "Order the server hardware for production", status: 0, assigned_user_id: null },
+    { _id: 3, name: "Order console machines", status: 0, assigned_user_id: 2 },
+    { _id: 4, name: "Order prerequisite software", status: 0, assigned_user_id: null },
+    { _id: 5, name: "Identify the test LPAR", status: 0, assigned_user_id: null },
+    { _id: 6, name: "Identify production LPARs", status: 0, assigned_user_id: null },
   ]);
 });
 

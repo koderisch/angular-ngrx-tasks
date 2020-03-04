@@ -4,6 +4,15 @@ ul.tasks {
   margin-bottom: 10px;
 }
 
-ul.tasks button {
-    margin-right: 8px;
+ul.tasks li {
+  margin-bottom: 8px;
+}
+
+ul.tasks li button {
+  margin-right: 8px;
+  font-size: 12px;
+  padding: 4px 7px;
+}
+ul.tasks li button.btn-danger {
+  padding: 4px 10px;
 }
