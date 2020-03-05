@@ -6,8 +6,12 @@ ul.tasks {
 
 ul.tasks li {
   margin-bottom: 8px;
+  background: #eee;
+  padding: 2px;
 }
-
+ul.tasks.unassigned li {
+  cursor: pointer;
+}
 ul.tasks li button {
   margin-right: 8px;
   font-size: 12px;
