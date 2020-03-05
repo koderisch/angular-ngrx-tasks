@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `npm start` within `server/` directory for API provision.
+Run `npm start` within `server/` directory for API provision.<br/>
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
@@ -17,7 +17,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running production version
 
-Run `npm start` within `server/` directory. Navigate to `http://localhost:3000/`.
+Run `npm start` within `server/` directory. Navigate to `http://localhost:3000/`.<br/>
 This will require the production build process to update `server/dist` directory. (see above)
 
 ## Further help
