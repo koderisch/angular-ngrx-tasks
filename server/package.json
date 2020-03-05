@@ -7,6 +7,7 @@
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "express": "~4.15.5",
-    "mongodb": "^3.5.4"
+    "mongodb": "^3.5.4",
+    "pg-promise": "^10.4.4"
   }
 }
