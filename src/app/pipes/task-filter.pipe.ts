@@ -10,7 +10,6 @@ export class TaskFilterPipe implements PipeTransform {
     if (!items || !filter) {
       return items;
     }
-    return items.filter(item => (item.assigned_user_id === filter.assigned_user_id));
+    return items.filter(item => (item.assigned_user_id == filter.assigned_user_id));
   }
 }
-

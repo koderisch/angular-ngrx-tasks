@@ -15,7 +15,7 @@ export class TasksComponent implements OnInit {
 
   loggedIn: {
     name: "",
-    _id: 0
+    id: number
   };
   tasks: Task[];
   tasksUnassigned: Task[];
@@ -51,29 +51,12 @@ export class TasksComponent implements OnInit {
       .subscribe(tasks => { this.tasks = tasks });
   }
 
-  addTaskToUser(_id) {
-    const pos = this.tasks.map(function(e) { return e._id; }).indexOf(_id);
-    this.tasks[pos].assigned_user_id = this.loggedIn._id;
+  addTaskToUser(id) {
+    const pos = this.tasks.map(function(e) { return e.id; }).indexOf(id);
+    this.tasks[pos].assigned_user_id = this.loggedIn.id;
   }
-  removeTaskFromUser(_id) {
-    const pos = this.tasks.map(function(e) { return e._id; }).indexOf(_id);
+  removeTaskFromUser(id) {
+    const pos = this.tasks.map(function(e) { return e.id; }).indexOf(id);
     this.tasks[pos].assigned_user_id = null;
   }
-
-
-
-  /*
-  assignTasksToLists(tasks) {
-    this.tasks = tasks;
-    this.tasksUnassigned = tasks.filter(this.filterUnassigned);
-    this.tasksAssignedToUser = tasks.filter(this.filterAssignedToUser)
-  }
-  filterUnassigned(value) {
-    if (!value.assigned_user_id) return value;
-  }
-  filterAssignedToUser(value) {
-    if (value.assigned_user_id === this.loggedIn._id) return value;
-  }*/
-
-  //pos = myArray.map(function(e) { return e.hello; }).indexOf('stevie');
 }

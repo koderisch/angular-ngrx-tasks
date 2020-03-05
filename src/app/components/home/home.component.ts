@@ -16,7 +16,8 @@ export class HomeComponent implements OnInit {
     name: "",
     password: ""
   }
-  loggedIn: ""
+  loggedIn: "";
+  error: "";
 
   constructor(
     private usersService: UsersService,
@@ -36,18 +37,20 @@ export class HomeComponent implements OnInit {
     this.loggedIn = "";
   }
   logInUser() {
-    //console.log(this.login);
     this.usersService.logIn(this.login)
       .subscribe(user => { this.logInSuccess(user) });
   }
 
-  async logInSuccess(user) {
-    //console.log(user);
-    await this.usersService.storeLogin(user)
-    //this.loggedIn = this.usersService.getLoggedIn();
-    //this.login._password = "";
-    //this.login._name = "";
-    this.router.navigateByUrl('/tasks');
+  showError(err) {
+    this.error = err;
+  }
 
+  async logInSuccess(user) {
+    if (user && user.error) {
+      this.showError(user.error);
+    } else {
+      await this.usersService.storeLogin(user)
+      this.router.navigateByUrl('/tasks');
+    }
   }
 }
