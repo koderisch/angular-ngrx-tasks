@@ -18,6 +18,11 @@ app.use(cors());
 // Point static path to dist (Angular app)
 app.use(express.static(path.join(__dirname, "dist")));
 
+// render /tasks from dist
+app.get("/tasks", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist/index.html"));
+});
+
 app.get("/api/users", (req, res, next) => {
   userDb.getAll(function(results, error) {
     if (results) {

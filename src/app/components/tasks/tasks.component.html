@@ -1,6 +1,6 @@
 <div *ngIf="loggedIn">
   <p>
-    Logged in as user <em>{{ loggedIn.name }}</em>
+    Logged in as user <em>{{ loggedIn.user_name }}</em>
   </p>
   <button (click)="logOutUser()" class="btn btn-primary">Log out</button>
 </div>
@@ -11,11 +11,11 @@
     <ul class="tasks unassigned">
       <li
         *ngFor="let task of tasks | taskFilter: filterUnassigned"
-        (click)="addTaskToUser(task.id)"
+        (click)="addTaskToUser(task.task_id)"
       >
         <button class="btn btn-success">
           add</button
-        >{{ task.name }}
+        >{{ task.task_name }}
       </li>
     </ul>
   </div>
@@ -24,12 +24,15 @@
     <ul class="tasks assigned">
       <li
         *ngFor="
-          let task of tasks | taskFilter: { assigned_user_id: loggedIn.id }
+          let task of tasks | taskFilter: { assigned_user_id: loggedIn.user_id }
         "
       >
-        <button (click)="removeTaskFromUser(task.id)" class="btn btn-danger">
+        <button
+          (click)="removeTaskFromUser(task.task_id)"
+          class="btn btn-danger"
+        >
           x</button
-        >{{ task.name }}
+        >{{ task.task_name }}
       </li>
     </ul>
   </div>

@@ -19,13 +19,17 @@ class UserDb {
 
   logIn(userName, password, callback) {
     const db = pgp(globals.postgreDbUrl);
-    db.any("select * from users where name = $1", [userName])
+    db.any("select * from users where user_name = $1", [userName])
       .then(data => {
         console.log("DATA:", data);
         console.log("password:", password);
         const result = data[0];
-        if (result.password === password) {
-          callback(result);
+        if (result.user_password === password) {
+          const user = {
+            user_name: result.user_name,
+            user_id: result.user_id
+          };
+          callback(user);
         } else {
           const err = "passwords don't match";
           callback(null, err);

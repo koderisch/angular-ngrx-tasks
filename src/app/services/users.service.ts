@@ -36,7 +36,6 @@ export class UsersService {
   }
 
   logIn(login): Observable<any> {
-    //    console.log("logIn:", login.name);
     const url = `${this.apiUrl}/login`;
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');

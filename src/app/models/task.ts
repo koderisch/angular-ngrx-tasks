@@ -1,6 +1,6 @@
 export class Task {
-    id: number;
-    name: string;
-    status: number;
+    task_id: number;
+    task_name: string;
+    task_status: number;
     assigned_user_id: number;
 }

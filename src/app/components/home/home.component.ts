@@ -16,7 +16,10 @@ export class HomeComponent implements OnInit {
     name: "",
     password: ""
   }
-  loggedIn: "";
+  loggedIn: {
+    user_name: string,
+    user_id: number
+  };
   error: "";
 
   constructor(
@@ -34,7 +37,7 @@ export class HomeComponent implements OnInit {
   }
   async logOutUser() {
     this.usersService.logOut();
-    this.loggedIn = "";
+    this.loggedIn = null;
   }
   logInUser() {
     this.usersService.logIn(this.login)

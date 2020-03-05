@@ -14,8 +14,8 @@ import { Task } from '../../models/task';
 export class TasksComponent implements OnInit {
 
   loggedIn: {
-    name: "",
-    id: number
+    user_name: string,
+    user_id: number
   };
   tasks: Task[];
   tasksUnassigned: Task[];
@@ -52,11 +52,11 @@ export class TasksComponent implements OnInit {
   }
 
   addTaskToUser(id) {
-    const pos = this.tasks.map(function(e) { return e.id; }).indexOf(id);
-    this.tasks[pos].assigned_user_id = this.loggedIn.id;
+    const pos = this.tasks.map(function(e) { return e.task_id; }).indexOf(id);
+    this.tasks[pos].assigned_user_id = this.loggedIn.user_id;
   }
   removeTaskFromUser(id) {
-    const pos = this.tasks.map(function(e) { return e.id; }).indexOf(id);
+    const pos = this.tasks.map(function(e) { return e.task_id; }).indexOf(id);
     this.tasks[pos].assigned_user_id = null;
   }
 }
