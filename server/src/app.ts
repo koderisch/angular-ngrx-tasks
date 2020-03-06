@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, "../../client/dist")));
 
 // render /tasks from dist
 app.get("/tasks", (res: any) => {
-  res.sendFile(path.join(__dirname, "../../dist/client/index.html"));
+  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
 });
 
 app.get("/api/users", (req, res, next) => {

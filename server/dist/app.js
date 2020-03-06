@@ -19,7 +19,7 @@ app.use(cors_1.default());
 app.use(express_1.default.static(path_1.default.join(__dirname, "../../client/dist")));
 // render /tasks from dist
 app.get("/tasks", (res) => {
-    res.sendFile(path_1.default.join(__dirname, "../../dist/client/index.html"));
+    res.sendFile(path_1.default.join(__dirname, "../../client/dist/index.html"));
 });
 app.get("/api/users", (req, res, next) => {
     userDb.getAll((results, error) => {
