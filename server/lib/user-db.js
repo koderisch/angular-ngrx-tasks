@@ -5,7 +5,10 @@ var pgp = require("pg-promise")(/* options */);
 class UserDb {
   getAll(callback) {
     const db = pgp(globals.postgreDbUrl);
-    db.any("select * from users", [])
+    db.query("SELECT ${columns:name} FROM ${table:name}", {
+      columns: ["user_name", "user_id"],
+      table: "users"
+    })
       .then(data => {
         console.log("DATA:", data);
         callback(data);
@@ -19,17 +22,14 @@ class UserDb {
 
   logIn(userName, password, callback) {
     const db = pgp(globals.postgreDbUrl);
-    db.any("select * from users where user_name = $1", [userName])
+    db.any("SELECT * FROM users WHERE user_name = $1", [userName])
       .then(data => {
         console.log("DATA:", data);
         console.log("password:", password);
         const result = data[0];
         if (result.user_password === password) {
-          const user = {
-            user_name: result.user_name,
-            user_id: result.user_id
-          };
-          callback(user);
+          delete result.user_password;
+          callback(result);
         } else {
           const err = "passwords don't match";
           callback(null, err);

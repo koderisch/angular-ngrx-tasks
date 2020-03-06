@@ -20,6 +20,7 @@ export class UsersService {
   getAll(): Observable<User[]> {
     const url = `${this.apiUrl}/users`;
     return this.http.get<User[]>(url)
+    
   }
 
   getLoggedIn() {
