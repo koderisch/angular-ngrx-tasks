@@ -17,10 +17,7 @@ app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(cors_1.default());
 // Point static path to dist (Angular app)
 app.use(express_1.default.static(path_1.default.join(__dirname, "../../client/dist")));
-// render /tasks from dist
-app.get("/tasks", (res) => {
-    res.sendFile(path_1.default.join(__dirname, "../../client/dist/index.html"));
-});
+app.use('/tasks', express_1.default.static(path_1.default.join(__dirname, "../../client/dist")));
 app.get("/api/users", (req, res, next) => {
     userDb.getAll((results, error) => {
         if (results) {
