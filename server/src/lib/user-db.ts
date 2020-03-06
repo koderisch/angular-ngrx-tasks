@@ -1,41 +1,50 @@
-const globals = require("../lib/globals"); //load global variables
+import Globals from "../lib/globals"; // load global variables
+const globals = new Globals();
 
-var pgp = require("pg-promise")(/* options */);
+import pgPromise from 'pg-promise';
+const pgp = pgPromise();
 
-class UserDb {
-  getAll(callback) {
+export default class UserDb {
+
+  getAll(callback: (result: any, error: string) => void) {
+
     const db = pgp(globals.postgreDbUrl);
     db.query("SELECT ${columns:name} FROM ${table:name}", {
       columns: ["user_name", "user_id"],
       table: "users"
     })
-      .then(data => {
+      .then((data: object[]) => {
+        // tslint:disable-next-line:no-console
         console.log("DATA:", data);
-        callback(data);
+        callback(data, "");
       })
-      .catch(error => {
+      .catch((error: string) => {
+        // tslint:disable-next-line:no-console
         console.error("dbase error", error);
         callback(null, error);
       })
       .finally(db.$pool.end);
   }
 
-  logIn(userName, password, callback) {
+  logIn(userName: string, password: string, callback: (result: any, error: string) => void) {
     const db = pgp(globals.postgreDbUrl);
     db.any("SELECT * FROM users WHERE user_name = $1", [userName])
-      .then(data => {
+      .then((data: object[]) => {
+        // tslint:disable-next-line:no-console
         console.log("DATA:", data);
+        // tslint:disable-next-line:no-console
         console.log("password:", password);
-        const result = data[0];
+        const result: any = data[0];
         if (result.user_password === password) {
           delete result.user_password;
-          callback(result);
+          callback(result, "");
         } else {
           const err = "passwords don't match";
           callback(null, err);
         }
       })
-      .catch(error => {
+      .catch((error: string) => {
+        // tslint:disable-next-line:no-console
         console.error("dbase error", error);
         callback(null, error);
       })

@@ -1,14 +1,15 @@
-const express = require("express");
-const path = require("path");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+import express from "express";
+import path from "path";
+
+import bodyParser from "body-parser";
+import cors from "cors";
 
 const app = express();
 
-const UserDb = require("./lib/user-db");
+import UserDb from "./lib/user-db";
 const userDb = new UserDb();
 
-const TasksDb = require("./lib/tasks-db");
+import TasksDb from "./lib/tasks-db";
 const tasksDb = new TasksDb();
 
 app.use(bodyParser.json());
@@ -16,19 +17,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 // Point static path to dist (Angular app)
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "../../client/dist")));
+
 
 // render /tasks from dist
-app.get("/tasks", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist/index.html"));
+app.get("/tasks", (res: any) => {
+  res.sendFile(path.join(__dirname, "../../dist/client/index.html"));
 });
 
 app.get("/api/users", (req, res, next) => {
-  userDb.getAll(function(results, error) {
+  userDb.getAll((results: any, error: string) => {
     if (results) {
       res.json(results);
     } else if (error) {
-      res.json({ error: error });
+      res.json({ error });
     }
   });
 });
@@ -36,32 +38,32 @@ app.get("/api/users", (req, res, next) => {
 app.post("/api/login", (req, res, next) => {
   const userName = req.body.name;
   const password = req.body.password;
-  userDb.logIn(userName, password, function(results, error) {
-    if (results) {
-      res.json(results);
+  userDb.logIn(userName, password, (result: any, error: string) => {
+    if (result) {
+      res.json(result);
     } else if (error) {
-      res.json({ error: error });
+      res.json({ error });
     }
   });
 });
 
 app.get("/api/tasks", (req, res, next) => {
-  tasksDb.getAll(function(results, error) {
-    if (results) {
-      res.json(results);
+  tasksDb.getAll((result: any, error: string) => {
+    if (result) {
+      res.json(result);
     } else if (error) {
-      res.json({ error: error });
+      res.json({ error });
     }
   });
 });
 
 app.use((req, res, next) => {
   const err = new Error("Not Found");
-  err.status = 404;
+  res.status(404);
   next(err);
 });
 
-app.use((err, req, res, next) => {
+app.use((err: any, req: any, res: any, next: any) => {
   res.status(err.status || 500);
   res.json({
     status: "error",
@@ -70,5 +72,6 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(3000, () => {
+  // tslint:disable-next-line:no-console
   console.log("App listening on port 3000");
 });
