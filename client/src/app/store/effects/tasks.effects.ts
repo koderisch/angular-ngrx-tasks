@@ -24,7 +24,6 @@ export class TasksEffects {
     mergeMap(() =>
       this.tasksService.getTasks().pipe(
         map(data => {
-          console.log('success');
           return new LoadTasksSuccessAction(data);
         }),
         catchError(error => of(new LoadTasksFailureAction(error)))
@@ -32,16 +31,16 @@ export class TasksEffects {
     )
   );
   /*
-  @Effect() addShoppingItem$ = this.actions$.pipe(
-    ofType<AddItemAction>(ShoppingActionTypes.ADD_ITEM),
+  @Effect() assignTask$ = this.actions$.pipe(
+    ofType<AssignTaskAction>(TasksActionTypes.ASSIGN_TASK),
     mergeMap(data =>
-      this.shoppingService.addShoppingItem(data.payload).pipe(
-        map(() => new AddItemSuccessAction(data.payload)),
-        catchError(error => of(new AddItemFailureAction(error)))
+      this.tasksService.assignTask(data.payload).pipe(
+        map(() => new AssignTaskSuccessAction(data.payload)),
+        catchError(error => of(new AssignTaskFailureAction(error)))
       )
     )
   );
-
+/*
   @Effect() deleteShoppingItem$ = this.actions$.pipe(
     ofType<DeleteItemAction>(ShoppingActionTypes.DELETE_ITEM),
     mergeMap(data =>

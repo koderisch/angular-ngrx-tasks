@@ -1,8 +1,5 @@
 import { Task } from 'src/app/models/task.model';
-import {
-  TasksActionTypes,
-  TasksAction,
-} from '../actions/tasks.actions';
+import { TasksActionTypes, TasksAction } from '../actions/tasks.actions';
 
 export interface TasksState {
   list: Task[];
@@ -43,12 +40,19 @@ export function TasksReducer(
     case TasksActionTypes.ASSIGN_TASK:
       return {
         ...state,
+        list: state.list.filter(item => {
+          item.assigned_user_id =
+            item.task_id === action.payload.task_id
+              ? action.payload.assigned_user_id
+              : item.assigned_user_id;
+          return item;
+        }),
         loading: true,
       };
     case TasksActionTypes.ASSIGN_TASK_SUCCESS:
       return {
         ...state,
-        //list: [...state.list, action.payload],
+        list: [...state.list, action.payload],
         loading: false,
       };
     case TasksActionTypes.ASSIGN_TASK_FAILURE:
@@ -60,12 +64,18 @@ export function TasksReducer(
     case TasksActionTypes.UNASSIGN_TASK:
       return {
         ...state,
-        loading: true,
+        list: state.list.filter(item => {
+          item.assigned_user_id =
+            item.task_id === action.payload.task_id
+              ? null
+              : item.assigned_user_id;
+          return item;
+        }),
       };
     case TasksActionTypes.UNASSIGN_TASK_SUCCESS:
       return {
         ...state,
-        //list: state.list.filter(item => item.task_id !== action.payload),
+        list: state.list.filter(item => item.task_id !== action.payload),
         loading: false,
       };
     case TasksActionTypes.UNASSIGN_TASK_FAILURE:

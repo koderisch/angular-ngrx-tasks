@@ -7,16 +7,17 @@ import { Task } from '../models/task.model';
 
 @Injectable()
 export class TasksService {
-
   private apiUrl = `${environment.apiUrl}`;
 
-  constructor(
-    private http: HttpClient,
-  ) { }
-
+  constructor(private http: HttpClient) {}
 
   getTasks(): Observable<Task[]> {
     const url = `${this.apiUrl}/tasks`;
-    return this.http.get<Task[]>(url)
+    return this.http.get<Task[]>(url);
+  }
+
+  assignTask(task): Observable<Task> {
+    const url = `${this.apiUrl}/tasks`;
+    return this.http.get<Task>(url);
   }
 }

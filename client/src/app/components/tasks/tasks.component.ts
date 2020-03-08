@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -19,12 +19,12 @@ import {
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.css']
+  styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
   loggedIn: {
-    user_name: string,
-    user_id: number
+    user_name: string;
+    user_id: number;
   };
   tasks$: Observable<Task[]>;
   loading$: Observable<boolean>;
@@ -33,20 +33,18 @@ export class TasksComponent implements OnInit {
   tasksAssignedToUser: Task[];
   filterUnassigned: {};
 
-
   constructor(
     private store: Store<AppState>,
     private usersService: UsersService,
     private tasksService: TasksService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.tasks$ = this.store.select(store => store.tasks.list);
     this.loading$ = this.store.select(store => store.tasks.loading);
     this.error$ = this.store.select(store => store.tasks.error);
-    this.store.dispatch(new LoadTasksAction()); 
-
+    this.store.dispatch(new LoadTasksAction());
 
     this.checkIfLoggedIn();
     //this.buildTasksList();
@@ -56,20 +54,27 @@ export class TasksComponent implements OnInit {
   checkIfLoggedIn() {
     this.loggedIn = this.usersService.getLoggedIn();
     if (!this.loggedIn) {
-      this.router.navigateByUrl("/");
+      this.router.navigateByUrl('/');
     }
   }
   async logOutUser() {
     this.usersService.logOut();
-    this.router.navigateByUrl("/");
+    this.router.navigateByUrl('/');
   }
 
   addTaskToUser(id) {
-    //const pos = this.tasks$.map(function(e) { return e.task_id; }).indexOf(id);
-    //this.tasks[pos].assigned_user_id = this.loggedIn.user_id;
+    this.store.dispatch(
+      new AssignTaskAction({
+        task_id: id,
+        assigned_user_id: this.loggedIn.user_id,
+      })
+    );
   }
   removeTaskFromUser(id) {
-    //const pos = this.tasks.map(function(e) { return e.task_id; }).indexOf(id);
-    //this.tasks[pos].assigned_user_id = null;
+    this.store.dispatch(
+      new UnAssignTaskAction({
+        task_id: id
+      })
+    );
   }
 }
