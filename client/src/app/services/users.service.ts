@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 
 import { environment } from '../../environments/environment';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class UsersService {
@@ -20,7 +20,6 @@ export class UsersService {
   getAll(): Observable<User[]> {
     const url = `${this.apiUrl}/users`;
     return this.http.get<User[]>(url)
-    
   }
 
   getLoggedIn() {

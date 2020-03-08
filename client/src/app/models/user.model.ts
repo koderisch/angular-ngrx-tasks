@@ -1,9 +1,9 @@
-export class User {
+export interface User {
     name: string;
     password: string;
 }
 
-export class Credentials {
+export interface Credentials {
     username: string;
     password: string;
 }

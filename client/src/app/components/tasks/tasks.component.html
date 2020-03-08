@@ -10,7 +10,7 @@
     <h3>Unassigned tasks</h3>
     <ul class="tasks unassigned">
       <li
-        *ngFor="let task of tasks | taskFilter: filterUnassigned"
+        *ngFor="let task of tasks$ | async | taskFilter: filterUnassigned"
         (click)="addTaskToUser(task.task_id)"
       >
         <button class="btn btn-success">
@@ -24,7 +24,7 @@
     <ul class="tasks assigned">
       <li
         *ngFor="
-          let task of tasks | taskFilter: { assigned_user_id: loggedIn.user_id }
+          let task of tasks$ | async | taskFilter: { assigned_user_id: loggedIn.user_id }
         "
       >
         <button
