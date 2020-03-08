@@ -27,13 +27,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    TasksComponent,
-    TaskFilterPipe,
-    NgrxTest1Component,
-  ],
+  declarations: [AppComponent, HomeComponent, TasksComponent, TaskFilterPipe],
   imports: [
     BrowserModule,
     AppRoutingModule,
