@@ -20,6 +20,11 @@ import { TaskFilterPipe } from './pipes/task-filter.pipe';
 
 import { StoreModule } from '@ngrx/store';
 import { counterReducer } from './store/reducers/counter.reducer';
+import { TasksReducer } from './store/reducers/tasks.reducer';
+
+import { EffectsModule } from '@ngrx/effects';
+import { TasksEffects } from './store/effects/tasks.effects';
+
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 
@@ -30,7 +35,6 @@ import { environment } from '../environments/environment';
     TasksComponent,
     TaskFilterPipe,
     NgrxTest1Component,
-    
   ],
   imports: [
     BrowserModule,
@@ -38,10 +42,14 @@ import { environment } from '../environments/environment';
     FormsModule,
     HttpClientModule,
     StorageServiceModule,
-    StoreModule.forRoot({ count: counterReducer }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreModule.forRoot({ count: counterReducer, tasks: TasksReducer }),
+    EffectsModule.forRoot([TasksEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
   providers: [UsersService, TasksService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
