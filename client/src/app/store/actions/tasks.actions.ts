@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Task } from '../../models/task.model';
+import { User } from '../../models/user.model';
 
 export enum TasksActionTypes {
   LOAD_TASKS = '[TASKS] Load Tasks',
@@ -11,6 +12,8 @@ export enum TasksActionTypes {
   UNASSIGN_TASK = '[TASKS] UnAssign Task',
   UNASSIGN_TASK_SUCCESS = '[TASKS] UnAssign Task Success',
   UNASSIGN_TASK_FAILURE = '[TASKS] UnAssign Task Failure',
+  STORE_USER = '[TASKS] Store User',
+  REMOVE_USER = '[TASKS] Remove User',
 }
 
 export class LoadTasksAction implements Action {
@@ -27,7 +30,7 @@ export class LoadTasksFailureAction implements Action {
 
 export class AssignTaskAction implements Action {
   readonly type = TasksActionTypes.ASSIGN_TASK;
-  constructor(public payload: { task_id: number, assigned_user_id: number }) {}
+  constructor(public payload: { task_id: number; assigned_user_id: number }) {}
 }
 export class AssignTaskSuccessAction implements Action {
   readonly type = TasksActionTypes.ASSIGN_TASK_SUCCESS;
@@ -52,6 +55,15 @@ export class UnAssignTaskFailureAction implements Action {
   constructor(public payload: Error) {}
 }
 
+export class StoreUserAction implements Action {
+  readonly type = TasksActionTypes.STORE_USER;
+  constructor(public payload: User) {}
+}
+export class RemoveUserAction implements Action {
+  readonly type = TasksActionTypes.REMOVE_USER;
+  constructor() {}
+}
+
 export type TasksAction =
   | LoadTasksAction
   | LoadTasksSuccessAction
@@ -61,4 +73,6 @@ export type TasksAction =
   | AssignTaskFailureAction
   | UnAssignTaskAction
   | UnAssignTaskFailureAction
-  | UnAssignTaskSuccessAction;
+  | UnAssignTaskSuccessAction
+  | StoreUserAction
+  | RemoveUserAction;

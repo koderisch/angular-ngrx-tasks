@@ -1,47 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 
-import { User } from '../../models/user.model';
+import { User, Credentials } from '../../models/user.model';
 import { UsersService } from '../../services/users.service';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from 'src/app/store/models/app-state.model';
+import { StoreUserAction, RemoveUserAction } from 'src/app/store/actions/tasks.actions';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-
   users: User[];
-  login = {
-    name: "",
-    password: ""
-  }
-  loggedIn: {
-    user_name: string,
-    user_id: number
-  };
-  error: "";
+  credentials = new Credentials();
+  loggedIn$: Observable<User>;
+  error: '';
 
   constructor(
+    private store: Store<AppState>,
     private usersService: UsersService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.getUsers();
-    this.loggedIn = this.usersService.getLoggedIn();
+    this.loggedIn$ = this.store.select(store => store.tasks.user);
   }
   getUsers(): void {
-    this.usersService.getAll()
-      .subscribe(users => this.users = users);
+    this.usersService.getAll().subscribe(users => (this.users = users));
   }
   async logOutUser() {
-    this.usersService.logOut();
-    this.loggedIn = null;
+    this.store.dispatch(new RemoveUserAction());
   }
   logInUser() {
-    this.usersService.logIn(this.login)
-      .subscribe(user => { this.logInSuccess(user) });
+    this.usersService.logIn(this.credentials).subscribe(user => {
+      this.logInSuccess(user);
+    });
   }
 
   showError(err) {
@@ -52,7 +50,7 @@ export class HomeComponent implements OnInit {
     if (user && user.error) {
       this.showError(user.error);
     } else {
-      await this.usersService.storeLogin(user)
+      this.store.dispatch(new StoreUserAction(user));
       this.router.navigateByUrl('/tasks');
     }
   }

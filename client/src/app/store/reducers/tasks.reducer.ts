@@ -1,16 +1,19 @@
 import { Task } from 'src/app/models/task.model';
 import { TasksActionTypes, TasksAction } from '../actions/tasks.actions';
+import { User } from 'src/app/models/user.model';
 
 export interface TasksState {
   list: Task[];
   loading: boolean;
   error: Error;
+  user: User;
 }
 
 const initialState: TasksState = {
   list: [],
   loading: false,
   error: undefined,
+  user: undefined
 };
 
 export function TasksReducer(
@@ -83,6 +86,16 @@ export function TasksReducer(
         ...state,
         error: action.payload,
         loading: false,
+      };
+    case TasksActionTypes.STORE_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+      case TasksActionTypes.REMOVE_USER:
+      return {
+        ...state,
+        user: undefined,
       };
     default:
       return state;

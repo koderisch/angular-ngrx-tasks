@@ -29,7 +29,7 @@ app.get("/api/users", (req, res, next) => {
     });
 });
 app.post("/api/login", (req, res, next) => {
-    const userName = req.body.name;
+    const userName = req.body.user_name;
     const password = req.body.password;
     userDb.logIn(userName, password, (result, error) => {
         if (result) {

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 
 import { environment } from '../../environments/environment';
-import { User } from '../models/user.model';
+import { User, Credentials } from '../models/user.model';
 
 @Injectable()
 export class UsersService {
@@ -35,11 +35,11 @@ export class UsersService {
     this.storage.remove(this.USER_STORE_KEY);
   }
 
-  logIn(login): Observable<any> {
+  logIn(credentials:Credentials): Observable<any> {
     const url = `${this.apiUrl}/login`;
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
-    return this.http.post<User>(url, JSON.stringify(login), { headers: headers });
+    return this.http.post<User>(url, JSON.stringify(credentials), { headers: headers });
   }
 
 

@@ -1,9 +1,9 @@
 export interface User {
-    name: string;
-    password: string;
+    user_name: string;
+    user_id: number;
 }
 
-export interface Credentials {
-    username: string;
+export class Credentials {
+    user_name: string;
     password: string;
 }

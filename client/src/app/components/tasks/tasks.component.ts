@@ -3,16 +3,17 @@ import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AppState } from 'src/app/store/models/app-state.model';
 
 import { UsersService } from '../../services/users.service';
-
 import { Task } from '../../models/task.model';
-import { AppState } from 'src/app/store/models/app-state.model';
+import { User } from '../../models/user.model';
 
 import {
   LoadTasksAction,
   AssignTaskAction,
   UnAssignTaskAction,
+  RemoveUserAction,
 } from 'src/app/store/actions/tasks.actions';
 
 @Component({
@@ -21,10 +22,8 @@ import {
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
-  loggedIn: {
-    user_name: string;
-    user_id: number;
-  };
+  loggedIn$: Observable<User>;
+  loggedInId: number;
   tasks$: Observable<Task[]>;
   loading$: Observable<boolean>;
   error$: Observable<Error>;
@@ -42,26 +41,27 @@ export class TasksComponent implements OnInit {
     this.tasks$ = this.store.select(store => store.tasks.list);
     this.loading$ = this.store.select(store => store.tasks.loading);
     this.error$ = this.store.select(store => store.tasks.error);
+    this.loggedIn$ = this.store.select(store => store.tasks.user);
+    this.loggedIn$.subscribe(user => this.checkIfLoggedIn(user));
     this.store.dispatch(new LoadTasksAction());
-    this.checkIfLoggedIn();
   }
 
-  checkIfLoggedIn() {
-    this.loggedIn = this.usersService.getLoggedIn();
-    if (!this.loggedIn) {
+  checkIfLoggedIn(user) {
+    if (!user) {
       this.router.navigateByUrl('/');
+    } else {
+      this.loggedInId = user.user_id;
     }
   }
   async logOutUser() {
-    this.usersService.logOut();
-    this.router.navigateByUrl('/');
+    this.store.dispatch(new RemoveUserAction());
   }
 
   assignTaskToUser(id: number) {
     this.store.dispatch(
       new AssignTaskAction({
         task_id: id,
-        assigned_user_id: this.loggedIn.user_id,
+        assigned_user_id: this.loggedInId,
       })
     );
   }

@@ -1,13 +1,14 @@
 <div class="row">
   <div class="col-md-4">
     <br />
-    <div *ngIf="loggedIn">
+  
+    <div *ngIf="loggedIn$ | async as loggedIn">
       <p>
         Logged in as user <em>{{ loggedIn.user_name }}</em>
       </p>
       <button (click)="logOutUser()" class="btn btn-primary">Log out</button>
     </div>
-    <div *ngIf="!loggedIn">
+    <div *ngIf="!(loggedIn$ | async)">
       <form (ngSubmit)="logInUser()" ngNativeValidate>
         <ul class="users">
           <li class="user-item" *ngFor="let user of users; let idx = index">
@@ -17,7 +18,7 @@
               id="userb{{ idx }}"
               value="{{ user.user_name }}"
               required
-              [(ngModel)]="login.name"
+              [(ngModel)]="credentials.user_name"
             />
             <label for="userb{{ idx }}">
               <span class="btn btn-secondary">{{ user.user_name }}</span>
@@ -27,7 +28,7 @@
         <input
           type="password"
           name="password"
-          [(ngModel)]="login.password"
+          [(ngModel)]="credentials.password"
           placeholder="enter your password"
         />
 
