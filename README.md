@@ -19,8 +19,8 @@ Run `npm start` within `/` directory. Navigate to `http://localhost:3000/`.
 
 ### Users stored in PostgreSQL database
 
-| Database name | michaelk |
-| Table | users |
+Database name: michaelk
+Table: users
 
 | Column        | type   |
 | ------------- | ------ |
@@ -28,14 +28,17 @@ Run `npm start` within `/` directory. Navigate to `http://localhost:3000/`.
 | user_name     | string |
 | user_password | string |
 
-Mongo
-database: test,
-collection: tasks: [{
-task_id: number,
-task_name: string,
-task_status: number,
-assigned_user_id: number
-}]
+### Tasks stored in Mongo database
+
+Database name: test
+Collection name: tasks
+
+| Column           | type   |
+| ---------------- | ------ |
+| task_id          | number |
+| task_name        | string |
+| task_status      | number |
+| assigned_user_id | number |
 
 ## Further help
 
