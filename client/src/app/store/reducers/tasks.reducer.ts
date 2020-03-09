@@ -13,7 +13,7 @@ const initialState: TasksState = {
   list: [],
   loading: false,
   error: undefined,
-  user: undefined
+  user: undefined,
 };
 
 export function TasksReducer(
@@ -44,10 +44,8 @@ export function TasksReducer(
       return {
         ...state,
         list: state.list.filter(item => {
-          item.assigned_user_id =
-            item.task_id === action.payload.task_id
-              ? state.user.user_id
-              : item.assigned_user_id;
+          item.task_id === action.payload.task_id &&
+            (item.assigned_user_id = state.user.user_id);
           return item;
         }),
         loading: true,
@@ -56,10 +54,8 @@ export function TasksReducer(
       return {
         ...state,
         list: state.list.filter(item => {
-          item.assigned_user_id =
-            item.task_id === action.payload.task_id
-              ? null
-              : item.assigned_user_id;
+          item.task_id === action.payload.task_id &&
+            (item.assigned_user_id = undefined);
           return item;
         }),
       };
@@ -68,7 +64,7 @@ export function TasksReducer(
         ...state,
         user: action.payload,
       };
-      case TasksActionTypes.REMOVE_USER:
+    case TasksActionTypes.REMOVE_USER:
       return {
         ...state,
         user: undefined,
