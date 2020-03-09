@@ -19,10 +19,10 @@ Run `npm start` within `/` directory. Navigate to `http://localhost:3000/`.
 
 ### Users stored in PostgreSQL database
 
-Database name: michaelk
+Database name: michaelk<br/>
 Table: users
 
-| Column        | type   |
+| column        | type   |
 | ------------- | ------ |
 | user_id       | number |
 | user_name     | string |
@@ -30,10 +30,10 @@ Table: users
 
 ### Tasks stored in Mongo database
 
-Database name: test
+Database name: test<br/>
 Collection name: tasks
 
-| Column           | type   |
+| field            | value  |
 | ---------------- | ------ |
 | task_id          | number |
 | task_name        | string |
