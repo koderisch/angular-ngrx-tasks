@@ -28,7 +28,7 @@ export class TasksComponent implements OnInit {
   error$: Observable<Error>;
   tasksUnassigned: Task[];
   tasksAssignedToUser: Task[];
-  filterUnassigned = { assigned_user_id: null };
+  filterUnassigned = { assigned_user_id: undefined };
 
   constructor(
     private store: Store<AppState>,
