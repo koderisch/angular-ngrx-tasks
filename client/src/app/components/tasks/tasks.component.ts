@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/models/app-state.model';
 
-import { UsersService } from '../../services/users.service';
 import { Task } from '../../models/task.model';
 import { User } from '../../models/user.model';
 
@@ -31,11 +30,7 @@ export class TasksComponent implements OnInit {
   tasksAssignedToUser: Task[];
   filterUnassigned = { assigned_user_id: undefined };
 
-  constructor(
-    private store: Store<AppState>,
-    private usersService: UsersService,
-    private router: Router
-  ) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit() {
     this.tasks$ = this.store.select(store => store.tasks.list);
@@ -46,7 +41,7 @@ export class TasksComponent implements OnInit {
     this.store.dispatch(new LoadTasksAction());
   }
 
-  updateUser(user:User) {
+  updateUser(user: User) {
     if (!user) {
       this.router.navigateByUrl('/');
     } else {
@@ -61,7 +56,7 @@ export class TasksComponent implements OnInit {
     this.store.dispatch(
       new AssignTaskAction({
         task_id: id,
-        user_id: this.userId
+        user_id: this.userId,
       })
     );
   }

@@ -34,7 +34,7 @@ export class AssignTaskAction implements Action {
 }
 export class AssignTaskSuccessAction implements Action {
   readonly type = TasksActionTypes.ASSIGN_TASK_SUCCESS;
-  constructor(public payload: { task_id: number }) {}
+  constructor(public payload: { task_id: number, user_id: number }) {}
 }
 export class AssignTaskFailureAction implements Action {
   readonly type = TasksActionTypes.ASSIGN_TASK_FAILURE;
