@@ -4,8 +4,8 @@ import { User } from '../../models/user.model';
 
 export enum TasksActionTypes {
   LOAD_TASKS = '[TASKS] Load Tasks',
-  LOAD_TASKS_SUCCESS = '[TASKS] Load Shopping Success',
-  LOAD_TASKS_FAILURE = '[TASKS] Load Shopping Failure',
+  LOAD_TASKS_SUCCESS = '[TASKS] Load Tasks Success',
+  LOAD_TASKS_FAILURE = '[TASKS] Load Tasks Failure',
   ASSIGN_TASK = '[TASKS] Assign Task',
   ASSIGN_TASK_SUCCESS = '[TASKS] Assign Task Success',
   ASSIGN_TASK_FAILURE = '[TASKS] Assign Task Failure',
@@ -30,11 +30,11 @@ export class LoadTasksFailureAction implements Action {
 
 export class AssignTaskAction implements Action {
   readonly type = TasksActionTypes.ASSIGN_TASK;
-  constructor(public payload: { task_id: number, user_id: number }) {}
+  constructor(public payload: { task_id: number; user_id: number }) {}
 }
 export class AssignTaskSuccessAction implements Action {
   readonly type = TasksActionTypes.ASSIGN_TASK_SUCCESS;
-  constructor(public payload: { task_id: number, user_id: number }) {}
+  constructor(public payload: { task_id: number; user_id: number }) {}
 }
 export class AssignTaskFailureAction implements Action {
   readonly type = TasksActionTypes.ASSIGN_TASK_FAILURE;
