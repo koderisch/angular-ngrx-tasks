@@ -27,8 +27,6 @@ class TasksDb {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
             });
-            // tslint:disable-next-line:no-console
-            console.log('Connected correctly to mongo server');
             return client;
         });
     }

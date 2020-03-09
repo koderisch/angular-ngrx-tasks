@@ -1,43 +1,39 @@
-import Globals from "../lib/globals"; // load global variables
+import Globals from '../lib/globals'; // load global variables
 const globals = new Globals();
 
 import pgPromise from 'pg-promise';
 const pgp = pgPromise();
 
 export default class UserDb {
-
   getAll(callback: (result: any, error: string) => void) {
-
     const db = pgp(globals.postgreDbUrl);
-    db.query("SELECT ${columns:name} FROM ${table:name}", {
-      columns: ["user_name", "user_id"],
-      table: "users"
+    db.query('SELECT ${columns:name} FROM ${table:name}', {
+      columns: ['user_name', 'user_id'],
+      table: 'users',
     })
       .then((data: object[]) => {
-        // tslint:disable-next-line:no-console
-        console.log("DATA:", data);
-        callback(data, "");
+        callback(data, '');
       })
       .catch((error: string) => {
         // tslint:disable-next-line:no-console
-        console.error("dbase error", error);
+        console.error('dbase error', error);
         callback(null, error);
       })
       .finally(db.$pool.end);
   }
 
-  logIn(userName: string, password: string, callback: (result: any, error: string) => void) {
+  logIn(
+    userName: string,
+    password: string,
+    callback: (result: any, error: string) => void
+  ) {
     const db = pgp(globals.postgreDbUrl);
-    db.any("SELECT * FROM users WHERE user_name = $1", [userName])
+    db.any('SELECT * FROM users WHERE user_name = $1', [userName])
       .then((data: object[]) => {
-        // tslint:disable-next-line:no-console
-        console.log("DATA:", data);
-        // tslint:disable-next-line:no-console
-        console.log("password:", password);
         const result: any = data[0];
         if (result.user_password === password) {
           delete result.user_password;
-          callback(result, "");
+          callback(result, '');
         } else {
           const err = "passwords don't match";
           callback(null, err);
@@ -45,7 +41,7 @@ export default class UserDb {
       })
       .catch((error: string) => {
         // tslint:disable-next-line:no-console
-        console.error("dbase error", error);
+        console.error('dbase error', error);
         callback(null, error);
       })
       .finally(db.$pool.end);
