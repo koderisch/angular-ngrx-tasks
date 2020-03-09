@@ -45,7 +45,7 @@ export function TasksReducer(
         ...state,
         list: state.list.filter(item => {
           item.task_id === action.payload.task_id &&
-            (item.assigned_user_id = state.user.user_id);
+            (item.assigned_user_id = action.payload.user_id);
           return item;
         }),
         loading: true,

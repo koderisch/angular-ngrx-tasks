@@ -25,10 +25,10 @@ class TasksDb {
         return __awaiter(this, void 0, void 0, function* () {
             const client = mongodb_1.MongoClient.connect(globals.mongoDbUrl, {
                 useNewUrlParser: true,
-                useUnifiedTopology: true
+                useUnifiedTopology: true,
             });
             // tslint:disable-next-line:no-console
-            console.log("Connected correctly to mongo server");
+            console.log('Connected correctly to mongo server');
             return client;
         });
     }
@@ -50,7 +50,7 @@ class TasksDb {
                     .collection(collection)
                     .find(query, {
                     sort,
-                    projection
+                    projection,
                 })
                     .toArray();
                 return r;
@@ -64,19 +64,60 @@ class TasksDb {
             }
         });
     }
+    /**
+     * Update a document in Mongo collection
+     * @method update
+     * @async
+     *
+     * @param {string} collection - name of collection
+     * @param {object} Data - data object containing fields to update and/or add
+     */
+    findOneAndUpdate(collection, filter, update) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const client = yield this.connect();
+            const db = client.db(globals.mongoDbName);
+            try {
+                const r = yield db
+                    .collection(collection)
+                    .findOneAndUpdate(filter, update);
+                return r;
+            }
+            catch (err) {
+                // tslint:disable-next-line:no-console
+                console.error(err.stack);
+            }
+            finally {
+                client.close();
+            }
+        });
+    }
     getAll(callback) {
-        const collection = "tasks";
+        const collection = 'tasks';
         const query = {};
         const sort = {};
         const projection = {};
         this.find(collection, query, sort, projection)
             .catch(err => {
             // tslint:disable-next-line:no-console
-            console.error("dbase.find error", err);
+            console.error('dbase.find error', err);
             callback(null, err);
         })
             .then(result => {
-            callback(result, "");
+            callback(result, '');
+        });
+    }
+    assignTask(taskId, userId, callback) {
+        const collection = 'tasks';
+        const filter = { task_id: taskId };
+        const update = { $set: { assigned_user_id: userId } };
+        this.findOneAndUpdate(collection, filter, update)
+            .catch(err => {
+            // tslint:disable-next-line:no-console
+            console.error('dbase.find error', err);
+            callback(null, err);
+        })
+            .then(result => {
+            callback(result, '');
         });
     }
 }

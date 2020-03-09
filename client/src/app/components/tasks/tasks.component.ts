@@ -22,10 +22,11 @@ import {
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
-  loggedIn$: Observable<User>;
+  user$: Observable<User>;
   tasks$: Observable<Task[]>;
   loading$: Observable<boolean>;
   error$: Observable<Error>;
+  userId: number;
   tasksUnassigned: Task[];
   tasksAssignedToUser: Task[];
   filterUnassigned = { assigned_user_id: undefined };
@@ -40,14 +41,16 @@ export class TasksComponent implements OnInit {
     this.tasks$ = this.store.select(store => store.tasks.list);
     this.loading$ = this.store.select(store => store.tasks.loading);
     this.error$ = this.store.select(store => store.tasks.error);
-    this.loggedIn$ = this.store.select(store => store.tasks.user);
-    this.loggedIn$.subscribe(user => this.checkIfLoggedIn(user));
+    this.user$ = this.store.select(store => store.tasks.user);
+    this.user$.subscribe(user => this.updateUser(user));
     this.store.dispatch(new LoadTasksAction());
   }
 
-  checkIfLoggedIn(user) {
+  updateUser(user:User) {
     if (!user) {
       this.router.navigateByUrl('/');
+    } else {
+      this.userId = user.user_id;
     }
   }
   async logOutUser() {
@@ -58,6 +61,7 @@ export class TasksComponent implements OnInit {
     this.store.dispatch(
       new AssignTaskAction({
         task_id: id,
+        user_id: this.userId
       })
     );
   }
