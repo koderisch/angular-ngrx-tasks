@@ -1,17 +1,17 @@
-<div *ngIf="loggedIn">
+<div *ngIf="loggedIn$ | async as loggedIn">
   <p>
     Logged in as user <em>{{ loggedIn.user_name }}</em>
   </p>
   <button (click)="logOutUser()" class="btn btn-primary">Log out</button>
 </div>
 <hr />
-<div class="row">
+<div *ngIf="loggedIn$ | async as loggedIn" class="row">
   <div class="col-md-6">
     <h3>Unassigned tasks</h3>
     <ul class="tasks unassigned">
       <li
-        *ngFor="let task of tasks | taskFilter: filterUnassigned"
-        (click)="addTaskToUser(task.task_id)"
+        *ngFor="let task of tasks$ | async | taskFilter: filterUnassigned"
+        (click)="assignTaskToUser(task.task_id)"
       >
         <button class="btn btn-success">
           add</button
@@ -24,11 +24,13 @@
     <ul class="tasks assigned">
       <li
         *ngFor="
-          let task of tasks | taskFilter: { assigned_user_id: loggedIn.user_id }
+          let task of tasks$
+            | async
+            | taskFilter: { assigned_user_id: loggedIn.user_id }
         "
       >
         <button
-          (click)="removeTaskFromUser(task.task_id)"
+          (click)="unAssignTaskFromUser(task.task_id)"
           class="btn btn-danger"
         >
           x</button
