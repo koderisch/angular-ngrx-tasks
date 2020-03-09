@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "prebuild": "cd ./client && ng build --prod",
+    "build": "cd ./server && npm start",
+    "start": "npm run build"
+  }
+}

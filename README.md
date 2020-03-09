@@ -1,24 +1,19 @@
 # PbTasksNgrxAuth
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.4.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.5.
 
 ## Development server
 
 Run `npm start` within `server/` directory for API provision.<br/>
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` within `client/` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Build client
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `server/dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` within `client/` to build the project. The build artifacts will be stored in the `client/dist/` directory. Use the `--prod` flag for a production build.
 
 ## Running production version
 
-Run `npm start` within `server/` directory. Navigate to `http://localhost:3000/`.<br/>
-This will require the production build process to update `server/dist` directory. (see above)
+Run `npm start` within `/` directory. Navigate to `http://localhost:3000/`.
 
 ## Further help
 
