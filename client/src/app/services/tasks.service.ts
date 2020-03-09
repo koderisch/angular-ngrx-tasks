@@ -16,8 +16,14 @@ export class TasksService {
     return this.http.get<Task[]>(url);
   }
 
-  assignTask(task): Observable<Task> {
-    const url = `${this.apiUrl}/tasks`;
-    return this.http.get<Task>(url);
+  assignTask(task): Observable<any> {
+    const url = `${this.apiUrl}/assigntask`;
+    return this.http.post(url, task);
+  }
+
+  unAssignTask(task): Observable<any> {
+    const url = `${this.apiUrl}/assigntask`;
+    task.user_id = null;
+    return this.http.post(url, task);
   }
 }

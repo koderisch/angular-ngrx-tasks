@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/models/app-state.model';
 
-import { UsersService } from '../../services/users.service';
 import { Task } from '../../models/task.model';
 import { User } from '../../models/user.model';
 
@@ -22,32 +21,31 @@ import {
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
-  loggedIn$: Observable<User>;
+  user$: Observable<User>;
   tasks$: Observable<Task[]>;
   loading$: Observable<boolean>;
   error$: Observable<Error>;
+  userId: number;
   tasksUnassigned: Task[];
   tasksAssignedToUser: Task[];
   filterUnassigned = { assigned_user_id: undefined };
 
-  constructor(
-    private store: Store<AppState>,
-    private usersService: UsersService,
-    private router: Router
-  ) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit() {
     this.tasks$ = this.store.select(store => store.tasks.list);
     this.loading$ = this.store.select(store => store.tasks.loading);
     this.error$ = this.store.select(store => store.tasks.error);
-    this.loggedIn$ = this.store.select(store => store.tasks.user);
-    this.loggedIn$.subscribe(user => this.checkIfLoggedIn(user));
+    this.user$ = this.store.select(store => store.tasks.user);
+    this.user$.subscribe(user => this.updateUser(user));
     this.store.dispatch(new LoadTasksAction());
   }
 
-  checkIfLoggedIn(user) {
+  updateUser(user: User) {
     if (!user) {
       this.router.navigateByUrl('/');
+    } else {
+      this.userId = user.user_id;
     }
   }
   async logOutUser() {
@@ -58,6 +56,7 @@ export class TasksComponent implements OnInit {
     this.store.dispatch(
       new AssignTaskAction({
         task_id: id,
+        user_id: this.userId,
       })
     );
   }

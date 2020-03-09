@@ -1,11 +1,16 @@
-<div *ngIf="loggedIn$ | async as loggedIn">
+<div *ngIf="error$ | async as error" class="error">
+  An error occured
+</div>
+
+<div *ngIf="user$ | async as user">
   <p>
-    Logged in as user <em>{{ loggedIn.user_name }}</em>
+    Logged in as user <em>{{ user.user_name }}</em>
   </p>
   <button (click)="logOutUser()" class="btn btn-primary">Log out</button>
 </div>
+
 <hr />
-<div *ngIf="loggedIn$ | async as loggedIn" class="row">
+<div *ngIf="user$ | async as user" class="row">
   <div class="col-md-6">
     <h3>Unassigned tasks</h3>
     <ul class="tasks unassigned">
@@ -26,7 +31,7 @@
         *ngFor="
           let task of tasks$
             | async
-            | taskFilter: { assigned_user_id: loggedIn.user_id }
+            | taskFilter: { assigned_user_id: user.user_id }
         "
       >
         <button

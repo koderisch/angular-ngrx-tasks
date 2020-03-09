@@ -30,11 +30,11 @@ export class LoadTasksFailureAction implements Action {
 
 export class AssignTaskAction implements Action {
   readonly type = TasksActionTypes.ASSIGN_TASK;
-  constructor(public payload: { task_id: number }) {}
+  constructor(public payload: { task_id: number, user_id: number }) {}
 }
 export class AssignTaskSuccessAction implements Action {
   readonly type = TasksActionTypes.ASSIGN_TASK_SUCCESS;
-  constructor(public payload: number) {}
+  constructor(public payload: { task_id: number, user_id: number }) {}
 }
 export class AssignTaskFailureAction implements Action {
   readonly type = TasksActionTypes.ASSIGN_TASK_FAILURE;
@@ -48,7 +48,7 @@ export class UnAssignTaskAction implements Action {
 
 export class UnAssignTaskSuccessAction implements Action {
   readonly type = TasksActionTypes.UNASSIGN_TASK_SUCCESS;
-  constructor(public payload: number) {}
+  constructor(public payload: { task_id: number }) {}
 }
 export class UnAssignTaskFailureAction implements Action {
   readonly type = TasksActionTypes.UNASSIGN_TASK_FAILURE;

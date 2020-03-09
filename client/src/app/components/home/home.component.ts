@@ -7,7 +7,10 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/models/app-state.model';
-import { StoreUserAction, RemoveUserAction } from 'src/app/store/actions/tasks.actions';
+import {
+  StoreUserAction,
+  RemoveUserAction,
+} from 'src/app/store/actions/tasks.actions';
 
 @Component({
   selector: 'app-home',
@@ -17,8 +20,8 @@ import { StoreUserAction, RemoveUserAction } from 'src/app/store/actions/tasks.a
 export class HomeComponent implements OnInit {
   users: User[];
   credentials = new Credentials();
-  loggedIn$: Observable<User>;
-  error: '';
+  user$: Observable<User>;
+  error: string;
 
   constructor(
     private store: Store<AppState>,
@@ -28,7 +31,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getUsers();
-    this.loggedIn$ = this.store.select(store => store.tasks.user);
+    this.user$ = this.store.select(store => store.tasks.user);
   }
   getUsers(): void {
     this.usersService.getAll().subscribe(users => (this.users = users));
@@ -42,7 +45,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  showError(err) {
+  showError(err:string) {
     this.error = err;
   }
 

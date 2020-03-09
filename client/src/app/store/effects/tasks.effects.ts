@@ -30,7 +30,7 @@ export class TasksEffects {
       )
     )
   );
-  /*
+
   @Effect() assignTask$ = this.actions$.pipe(
     ofType<AssignTaskAction>(TasksActionTypes.ASSIGN_TASK),
     mergeMap(data =>
@@ -40,16 +40,15 @@ export class TasksEffects {
       )
     )
   );
-/*
-  @Effect() deleteShoppingItem$ = this.actions$.pipe(
-    ofType<DeleteItemAction>(ShoppingActionTypes.DELETE_ITEM),
+
+  @Effect() unAssignTask$ = this.actions$.pipe(
+    ofType<UnAssignTaskAction>(TasksActionTypes.UNASSIGN_TASK),
     mergeMap(data =>
-      this.shoppingService.deleteShoppingItem(data.payload).pipe(
-        map(() => new DeleteItemSuccessAction(data.payload)),
-        catchError(error => of(new DeleteItemFailureAction(error)))
+      this.tasksService.unAssignTask(data.payload).pipe(
+        map(() => new UnAssignTaskSuccessAction(data.payload)),
+        catchError(error => of(new UnAssignTaskFailureAction(error)))
       )
     )
   );
-*/
   constructor(private actions$: Actions, private tasksService: TasksService) {}
 }

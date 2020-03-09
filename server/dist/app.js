@@ -16,9 +16,9 @@ app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(cors_1.default());
 // Point static path to dist (Angular app)
-app.use(express_1.default.static(path_1.default.join(__dirname, "../../client/dist")));
-app.use('/tasks', express_1.default.static(path_1.default.join(__dirname, "../../client/dist")));
-app.get("/api/users", (req, res, next) => {
+app.use(express_1.default.static(path_1.default.join(__dirname, '../../client/dist')));
+app.use('/tasks', express_1.default.static(path_1.default.join(__dirname, '../../client/dist')));
+app.get('/api/users', (req, res, next) => {
     userDb.getAll((results, error) => {
         if (results) {
             res.json(results);
@@ -28,7 +28,7 @@ app.get("/api/users", (req, res, next) => {
         }
     });
 });
-app.post("/api/login", (req, res, next) => {
+app.post('/api/login', (req, res, next) => {
     const userName = req.body.user_name;
     const password = req.body.password;
     userDb.logIn(userName, password, (result, error) => {
@@ -40,7 +40,7 @@ app.post("/api/login", (req, res, next) => {
         }
     });
 });
-app.get("/api/tasks", (req, res, next) => {
+app.get('/api/tasks', (req, res, next) => {
     tasksDb.getAll((result, error) => {
         if (result) {
             res.json(result);
@@ -50,20 +50,30 @@ app.get("/api/tasks", (req, res, next) => {
         }
     });
 });
+app.post('/api/assigntask', body_parser_1.default.json(), (req, res, next) => {
+    tasksDb.assignTask(req.body.task_id, req.body.user_id, (result, error) => {
+        if (result) {
+            res.json(result);
+        }
+        else if (error) {
+            res.json({ error });
+        }
+    });
+});
 app.use((req, res, next) => {
-    const err = new Error("Not Found");
+    const err = new Error('Not Found');
     res.status(404);
     next(err);
 });
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.json({
-        status: "error",
-        error: err
+        status: 'error',
+        error: err,
     });
 });
 app.listen(3000, () => {
     // tslint:disable-next-line:no-console
-    console.log("App listening on port 3000");
+    console.log('App listening on port 3000');
 });
 //# sourceMappingURL=app.js.map
