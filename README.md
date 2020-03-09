@@ -15,6 +15,28 @@ Run `ng build` within `client/` to build the project. The build artifacts will b
 
 Run `npm start` within `/` directory. Navigate to `http://localhost:3000/`.
 
+## Databases used
+
+### Users stored in PostgreSQL database
+
+| Database name | michaelk |
+| Table | users |
+
+| Column        | type   |
+| ------------- | ------ |
+| user_id       | number |
+| user_name     | string |
+| user_password | string |
+
+Mongo
+database: test,
+collection: tasks: [{
+task_id: number,
+task_name: string,
+task_status: number,
+assigned_user_id: number
+}]
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
