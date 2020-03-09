@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { UsersService } from '../../services/users.service';
-import { TasksService } from '../../services/tasks.service';
 
 import { Task } from '../../models/task.model';
 import { AppState } from 'src/app/store/models/app-state.model';
@@ -31,12 +30,11 @@ export class TasksComponent implements OnInit {
   error$: Observable<Error>;
   tasksUnassigned: Task[];
   tasksAssignedToUser: Task[];
-  filterUnassigned: {};
+  filterUnassigned = { assigned_user_id: null };
 
   constructor(
     private store: Store<AppState>,
     private usersService: UsersService,
-    private tasksService: TasksService,
     private router: Router
   ) {}
 
@@ -45,10 +43,7 @@ export class TasksComponent implements OnInit {
     this.loading$ = this.store.select(store => store.tasks.loading);
     this.error$ = this.store.select(store => store.tasks.error);
     this.store.dispatch(new LoadTasksAction());
-
     this.checkIfLoggedIn();
-    //this.buildTasksList();
-    this.filterUnassigned = { assigned_user_id: null };
   }
 
   checkIfLoggedIn() {
@@ -62,7 +57,7 @@ export class TasksComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  addTaskToUser(id) {
+  assignTaskToUser(id: number) {
     this.store.dispatch(
       new AssignTaskAction({
         task_id: id,
@@ -70,10 +65,10 @@ export class TasksComponent implements OnInit {
       })
     );
   }
-  removeTaskFromUser(id) {
+  unAssignTaskFromUser(id: number) {
     this.store.dispatch(
       new UnAssignTaskAction({
-        task_id: id
+        task_id: id,
       })
     );
   }
