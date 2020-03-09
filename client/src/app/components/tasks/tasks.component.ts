@@ -23,7 +23,6 @@ import {
 })
 export class TasksComponent implements OnInit {
   loggedIn$: Observable<User>;
-  loggedInId: number;
   tasks$: Observable<Task[]>;
   loading$: Observable<boolean>;
   error$: Observable<Error>;
@@ -49,8 +48,6 @@ export class TasksComponent implements OnInit {
   checkIfLoggedIn(user) {
     if (!user) {
       this.router.navigateByUrl('/');
-    } else {
-      this.loggedInId = user.user_id;
     }
   }
   async logOutUser() {
@@ -61,7 +58,6 @@ export class TasksComponent implements OnInit {
     this.store.dispatch(
       new AssignTaskAction({
         task_id: id,
-        assigned_user_id: this.loggedInId,
       })
     );
   }

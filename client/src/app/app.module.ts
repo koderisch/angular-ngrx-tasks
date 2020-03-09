@@ -6,10 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { StorageServiceModule } from 'ngx-webstorage-service';
-
 import { HomeComponent } from './components/home/home.component';
-
 import { TasksComponent } from './components/tasks/tasks.component';
 
 import { UsersService } from './services/users.service';
@@ -19,7 +16,6 @@ import { TaskFilterPipe } from './pipes/task-filter.pipe';
 
 import { StoreModule } from '@ngrx/store';
 import { TasksReducer } from './store/reducers/tasks.reducer';
-
 import { EffectsModule } from '@ngrx/effects';
 import { TasksEffects } from './store/effects/tasks.effects';
 
@@ -33,7 +29,6 @@ import { environment } from '../environments/environment';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    StorageServiceModule,
     StoreModule.forRoot({ tasks: TasksReducer }),
     EffectsModule.forRoot([TasksEffects]),
     StoreDevtoolsModule.instrument({

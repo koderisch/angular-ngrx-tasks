@@ -46,23 +46,11 @@ export function TasksReducer(
         list: state.list.filter(item => {
           item.assigned_user_id =
             item.task_id === action.payload.task_id
-              ? action.payload.assigned_user_id
+              ? state.user.user_id
               : item.assigned_user_id;
           return item;
         }),
         loading: true,
-      };
-    case TasksActionTypes.ASSIGN_TASK_SUCCESS:
-      return {
-        ...state,
-        list: [...state.list, action.payload],
-        loading: false,
-      };
-    case TasksActionTypes.ASSIGN_TASK_FAILURE:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
       };
     case TasksActionTypes.UNASSIGN_TASK:
       return {
@@ -74,18 +62,6 @@ export function TasksReducer(
               : item.assigned_user_id;
           return item;
         }),
-      };
-    case TasksActionTypes.UNASSIGN_TASK_SUCCESS:
-      return {
-        ...state,
-        list: state.list.filter(item => item.task_id !== action.payload),
-        loading: false,
-      };
-    case TasksActionTypes.UNASSIGN_TASK_FAILURE:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
       };
     case TasksActionTypes.STORE_USER:
       return {
