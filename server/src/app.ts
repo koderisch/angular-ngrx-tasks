@@ -17,8 +17,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 // Point static path to dist (Angular app)
-app.use(express.static(path.join(__dirname, '../../client/dist')));
-app.use('/tasks', express.static(path.join(__dirname, '../../client/dist')));
+app.use(express.static('static'));
+app.use('/tasks', express.static('static'));
 
 app.get('/api/users', (req, res, next) => {
   userDb.getAll().then(
