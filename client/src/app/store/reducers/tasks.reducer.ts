@@ -49,6 +49,7 @@ export function TasksReducer(
       };
     case TasksActionTypes.ASSIGN_TASK_SUCCESS:
       return {
+        //MK: redo this looking at how to do this properly!!!
         ...state,
         list: state.list.filter(item => {
           item.task_id === action.payload.task_id &&
