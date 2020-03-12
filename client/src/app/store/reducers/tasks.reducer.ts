@@ -51,11 +51,11 @@ export function TasksReducer(
       return {
         //MK: redo this looking at how to do this properly!!!
         ...state,
-        list: state.list.filter(item => {
-          item.task_id === action.payload.task_id &&
-            (item.assigned_user_id = action.payload.user_id);
-          return item;
-        }),
+        list: state.list.map(item =>
+          item.task_id === action.payload.task_id
+            ? { ...item, assigned_user_id: action.payload.user_id }
+            : item
+        ),
         loading: false,
       };
     case TasksActionTypes.ASSIGN_TASK_FAILURE:
@@ -75,11 +75,11 @@ export function TasksReducer(
     case TasksActionTypes.UNASSIGN_TASK_SUCCESS:
       return {
         ...state,
-        list: state.list.filter(item => {
-          item.task_id === action.payload.task_id &&
-            (item.assigned_user_id = undefined);
-          return item;
-        }),
+        list: state.list.map(item =>
+          item.task_id === action.payload.task_id
+            ? { ...item, assigned_user_id: undefined }
+            : item
+        ),
         loading: false,
       };
     case TasksActionTypes.UNASSIGN_TASK_FAILURE:
