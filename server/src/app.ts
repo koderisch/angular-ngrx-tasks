@@ -21,47 +21,47 @@ app.use(express.static(path.join(__dirname, '../../client/dist')));
 app.use('/tasks', express.static(path.join(__dirname, '../../client/dist')));
 
 app.get('/api/users', (req, res, next) => {
-  userDb.getAll((results: any, error: string) => {
-    if (results) {
-      res.json(results);
-    } else if (error) {
+  userDb.getAll().then(
+    (result: any) => {
+      res.json(result);
+    },
+    (error: string) => {
       res.json({ error });
     }
-  });
+  );
 });
 
 app.post('/api/login', (req, res, next) => {
   const userName = req.body.user_name;
   const password = req.body.password;
-  userDb.logIn(userName, password, (result: any, error: string) => {
-    if (result) {
+  userDb.logIn(userName, password).then(
+    (result: any) => {
       res.json(result);
-    } else if (error) {
+    },
+    (error: string) => {
       res.json({ error });
     }
-  });
+  );
 });
 
 app.get('/api/tasks', (req, res, next) => {
-  tasksDb.getAll((result: any, error: string) => {
-    if (result) {
+  tasksDb.getAll().then(
+    (result: any) => {
       res.json(result);
-    } else if (error) {
+    },
+    (error: string) => {
       res.json({ error });
     }
-  });
+  );
 });
 
 app.post('/api/assigntask', bodyParser.json(), (req, res, next) => {
-  tasksDb.assignTask(
-    req.body.task_id,
-    req.body.user_id,
-    (result: any, error: string) => {
-      if (result) {
-        res.json(result);
-      } else if (error) {
-        res.json({ error });
-      }
+  tasksDb.assignTask(req.body.task_id, req.body.user_id).then(
+    (result: any) => {
+      res.json(result);
+    },
+    (error: string) => {
+      res.json({ error });
     }
   );
 });

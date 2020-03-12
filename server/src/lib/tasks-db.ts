@@ -71,39 +71,39 @@ export default class TasksDb {
     }
   }
 
-  getAll(callback: (result: any, error: string) => void) {
-    const collection = 'tasks';
-    const query = {};
-    const sort = {};
-    const projection = {};
-    this.find(collection, query, sort, projection)
-      .catch(err => {
-        // tslint:disable-next-line:no-console
-        console.error('dbase.find error', err);
-        callback(null, err);
-      })
-      .then(result => {
-        callback(result, '');
-      });
+  getAll() {
+    return new Promise((resolve, reject) => {
+      const collection = 'tasks';
+      const query = {};
+      const sort = {};
+      const projection = {};
+      this.find(collection, query, sort, projection)
+        .catch(err => {
+          // tslint:disable-next-line:no-console
+          console.error('dbase.find error', err);
+          reject(err);
+        })
+        .then(result => {
+          resolve(result);
+        });
+    });
   }
 
-  assignTask(
-    taskId: number,
-    userId: number,
-    callback: (result: any, error: string) => void
-  ) {
-    const collection = 'tasks';
-    const filter = { task_id: taskId };
-    const update = { $set: { assigned_user_id: userId } };
-    this.findOneAndUpdate(collection, filter, update)
-      .catch(err => {
-        // tslint:disable-next-line:no-console
-        console.error('dbase.find error', err);
-        callback(null, err);
-      })
-      .then(result => {
-        callback(result, '');
-      });
+  assignTask(taskId: number, userId: number) {
+    return new Promise((resolve, reject) => {
+      const collection = 'tasks';
+      const filter = { task_id: taskId };
+      const update = { $set: { assigned_user_id: userId } };
+      this.findOneAndUpdate(collection, filter, update)
+        .catch(err => {
+          // tslint:disable-next-line:no-console
+          console.error('dbase.find error', err);
+          reject(err);
+        })
+        .then(result => {
+          resolve(result);
+        });
+    });
   }
 }
 
