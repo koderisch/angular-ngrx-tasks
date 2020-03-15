@@ -2,13 +2,6 @@
   An error occured
 </div>
 
-<div *ngIf="user$ | async as user">
-  <p>
-    Logged in as user <em>{{ user.user_name }}</em>
-  </p>
-  <button (click)="logOutUser()" class="btn btn-primary">Log out</button>
-</div>
-
 <hr />
 <div *ngIf="user$ | async as user" class="row">
   <div class="col-md-6">

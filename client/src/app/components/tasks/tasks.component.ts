@@ -48,9 +48,6 @@ export class TasksComponent implements OnInit {
       this.userId = user.user_id;
     }
   }
-  async logOutUser() {
-    this.store.dispatch(new RemoveUserAction());
-  }
 
   assignTaskToUser(id: number) {
     this.store.dispatch(

@@ -21,9 +21,10 @@ import { TasksEffects } from './store/effects/tasks.effects';
 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, TasksComponent, TaskFilterPipe],
+  declarations: [AppComponent, HomeComponent, TasksComponent, TaskFilterPipe, HeaderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

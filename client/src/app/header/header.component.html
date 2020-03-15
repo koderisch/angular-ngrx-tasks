@@ -1,0 +1,8 @@
+<h1>Task manager APP</h1>
+
+<div *ngIf="user$ | async as user">
+  <p>
+    Logged in as user <em>{{ user.user_name }}</em>
+  </p>
+  <button (click)="logOutUser()" class="btn btn-primary">Log out</button>
+</div>

@@ -2,12 +2,6 @@
   <div class="col-md-4">
     <br />
 
-    <div *ngIf="user$ | async as user">
-      <p>
-        Logged in as user <em>{{ user.user_name }}</em>
-      </p>
-      <button (click)="logOutUser()" class="btn btn-primary">Log out</button>
-    </div>
     <div *ngIf="!(user$ | async)">
       <form (ngSubmit)="logInUser()" ngNativeValidate>
         <ul class="users">
