@@ -103,7 +103,7 @@ export default class TasksDb {
       const collection = 'tasks';
       const query = {};
       const sort = {};
-      const projection = {};
+      const projection = { _id: 0 };
       this.find(collection, query, sort, projection)
         .catch(err => {
           // tslint:disable-next-line:no-console
