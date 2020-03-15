@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const globals_1 = __importDefault(require("../lib/globals")); // load global variables
 const globals = new globals_1.default();
 const mongodb_1 = require("mongodb");
+const assert_1 = __importDefault(require("assert"));
 class TasksDb {
     /**
      * Create and return a new MongoClient
@@ -89,6 +90,34 @@ class TasksDb {
             }
         });
     }
+    /**
+     * Insert a document into Mongo collection
+     * @method insert
+     * @async
+     *
+     * @param {string} collection - name of collection
+     * @param {object} Data - data object containing the document to add
+     */
+    insert(collection, Data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const client = yield this.connect();
+            const db = client.db(globals.mongoDbName);
+            try {
+                // Insert a single document
+                const r = yield db.collection(collection).insertOne(Data);
+                assert_1.default.equal(1, r.insertedCount);
+                return r;
+            }
+            catch (err) {
+                // tslint:disable-next-line:no-console
+                console.error(err.stack);
+            }
+            finally {
+                // Close connection
+                client.close();
+            }
+        });
+    }
     getAll() {
         return new Promise((resolve, reject) => {
             const collection = 'tasks';
@@ -119,6 +148,21 @@ class TasksDb {
             })
                 .then(result => {
                 resolve(result);
+            });
+        });
+    }
+    addTask(taskId, taskName) {
+        return new Promise((resolve, reject) => {
+            const collection = 'tasks';
+            const Data = { task_id: taskId, task_name: taskName, task_status: 0 };
+            this.insert(collection, Data)
+                .catch(err => {
+                // tslint:disable-next-line:no-console
+                console.error('dbase.insert error', err);
+                reject(err);
+            })
+                .then(result => {
+                resolve(Data);
             });
         });
     }

@@ -14,6 +14,9 @@ export enum TasksActionTypes {
   UNASSIGN_TASK_FAILURE = '[TASKS] UnAssign Task Failure',
   STORE_USER = '[TASKS] Store User',
   REMOVE_USER = '[TASKS] Remove User',
+  ADD_TASK = '[TASKS] Add Task',
+  ADD_TASK_SUCCESS = '[TASKS] Add Task Success',
+  ADD_TASK_FAILURE = '[TASKS] Add Task Failure',
 }
 
 export class LoadTasksAction implements Action {
@@ -64,6 +67,20 @@ export class RemoveUserAction implements Action {
   constructor() {}
 }
 
+export class AddTaskAction implements Action {
+  readonly type = TasksActionTypes.ADD_TASK;
+  constructor(public payload: { task_name: string }) {}
+}
+export class AddTaskSuccessAction implements Action {
+  readonly type = TasksActionTypes.ADD_TASK_SUCCESS;
+  constructor(public payload: { newTask: Task }) {}
+}
+export class AddTaskFailureAction implements Action {
+  readonly type = TasksActionTypes.ADD_TASK_FAILURE;
+  constructor(public payload: Error) {}
+}
+
+
 export type TasksAction =
   | LoadTasksAction
   | LoadTasksSuccessAction
@@ -75,4 +92,9 @@ export type TasksAction =
   | UnAssignTaskFailureAction
   | UnAssignTaskSuccessAction
   | StoreUserAction
-  | RemoveUserAction;
+  | RemoveUserAction
+  | AddTaskAction
+  | AddTaskSuccessAction
+  | AddTaskFailureAction;
+  
+

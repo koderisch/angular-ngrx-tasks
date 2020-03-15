@@ -1,6 +1,7 @@
 import { Task } from 'src/app/models/task.model';
 import { TasksActionTypes, TasksAction } from '../actions/tasks.actions';
 import { User } from 'src/app/models/user.model';
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
 export interface TasksState {
   list: Task[];
@@ -49,7 +50,6 @@ export function TasksReducer(
       };
     case TasksActionTypes.ASSIGN_TASK_SUCCESS:
       return {
-        //MK: redo this looking at how to do this properly!!!
         ...state,
         list: state.list.map(item =>
           item.task_id === action.payload.task_id
@@ -99,6 +99,26 @@ export function TasksReducer(
         ...state,
         user: undefined,
       };
+
+    case TasksActionTypes.ADD_TASK:
+      return {
+        ...state,
+        loading: true,
+        error: undefined,
+      };
+    case TasksActionTypes.ADD_TASK_SUCCESS:
+      return {
+        ...state,
+        list: [ ...state.list, action.payload ],
+        loading: false,
+      };
+    case TasksActionTypes.ADD_TASK_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
     default:
       return state;
   }

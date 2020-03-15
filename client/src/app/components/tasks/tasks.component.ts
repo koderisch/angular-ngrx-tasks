@@ -12,7 +12,7 @@ import {
   LoadTasksAction,
   AssignTaskAction,
   UnAssignTaskAction,
-  RemoveUserAction,
+  AddTaskAction,
 } from 'src/app/store/actions/tasks.actions';
 
 @Component({
@@ -29,6 +29,8 @@ export class TasksComponent implements OnInit {
   tasksUnassigned: Task[];
   tasksAssignedToUser: Task[];
   filterUnassigned = { assigned_user_id: undefined };
+
+  newTaskName: string;
 
   constructor(private store: Store<AppState>, private router: Router) {}
 
@@ -63,5 +65,14 @@ export class TasksComponent implements OnInit {
         task_id: id,
       })
     );
+  }
+
+  addTask() {
+    this.store.dispatch(
+      new AddTaskAction({
+        task_name: this.newTaskName,
+      })
+    );
+    this.newTaskName = '';
   }
 }

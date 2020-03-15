@@ -13,6 +13,9 @@ import {
   UnAssignTaskAction,
   UnAssignTaskFailureAction,
   UnAssignTaskSuccessAction,
+  AddTaskAction,
+  AddTaskSuccessAction,
+  AddTaskFailureAction,
 } from '../actions/tasks.actions';
 import { of } from 'rxjs';
 import { TasksService } from '../../services/tasks.service';
@@ -50,5 +53,16 @@ export class TasksEffects {
       )
     )
   );
+
+  @Effect() addTask$ = this.actions$.pipe(
+    ofType<AddTaskAction>(TasksActionTypes.ADD_TASK),
+    mergeMap(data =>
+      this.tasksService.addTask(data.payload).pipe(
+        map((newTask:any) => new AddTaskSuccessAction(newTask)),
+        catchError(error => of(new AddTaskFailureAction(error)))
+      )
+    )
+  );
+
   constructor(private actions$: Actions, private tasksService: TasksService) {}
 }

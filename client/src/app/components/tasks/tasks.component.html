@@ -1,39 +1,58 @@
 <div *ngIf="error$ | async as error" class="error">
-  An error occured
+  {{ error.message }}
 </div>
 
+<div *ngIf="loading$ | async as loading" class="loading">loading</div>
+
 <hr />
-<div *ngIf="user$ | async as user" class="row">
-  <div class="col-md-6">
-    <h3>Unassigned tasks</h3>
-    <ul class="tasks unassigned">
-      <li
-        *ngFor="let task of tasks$ | async | taskFilter: filterUnassigned"
-        (click)="assignTaskToUser(task.task_id)"
-      >
-        <button class="btn btn-success">
-          add</button
-        >{{ task.task_name }}
-      </li>
-    </ul>
-  </div>
-  <div class="col-md-6">
-    <h3>Tasks assigned to you</h3>
-    <ul class="tasks assigned">
-      <li
-        *ngFor="
-          let task of tasks$
-            | async
-            | taskFilter: { assigned_user_id: user.user_id }
-        "
-      >
-        <button
-          (click)="unAssignTaskFromUser(task.task_id)"
-          class="btn btn-danger"
+<div *ngIf="user$ | async as user">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Unassigned tasks</h3>
+      <ul class="tasks unassigned">
+        <li
+          *ngFor="let task of tasks$ | async | taskFilter: filterUnassigned"
+          (click)="assignTaskToUser(task.task_id)"
         >
-          x</button
-        >{{ task.task_name }}
-      </li>
-    </ul>
+          <button class="btn btn-success">
+            add</button
+          >{{ task.task_name }}
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h3>Tasks assigned to you</h3>
+      <ul class="tasks assigned">
+        <li
+          *ngFor="
+            let task of tasks$
+              | async
+              | taskFilter: { assigned_user_id: user.user_id }
+          "
+        >
+          <button
+            (click)="unAssignTaskFromUser(task.task_id)"
+            class="btn btn-danger"
+          >
+            x</button
+          >{{ task.task_name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Add a task</h3>
+      <form (ngSubmit)="addTask()" ngNativeValidate>
+        <input
+          type="text"
+          required
+          name="new_task_name"
+          [(ngModel)]="newTaskName"
+          placeholder="Enter task name"
+        />
+        <button type="submit">Add task</button>
+      </form>
+    </div>
   </div>
 </div>

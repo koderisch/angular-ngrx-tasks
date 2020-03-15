@@ -47,6 +47,13 @@ app.post('/api/assigntask', body_parser_1.default.json(), (req, res, next) => {
         res.json({ error });
     });
 });
+app.post('/api/addtask', body_parser_1.default.json(), (req, res, next) => {
+    tasksDb.addTask(req.body.task_id, req.body.task_name).then((result) => {
+        res.json(result);
+    }, (error) => {
+        res.json({ error });
+    });
+});
 app.use((req, res, next) => {
     const err = new Error('Not Found');
     res.status(404);

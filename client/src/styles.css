@@ -4,3 +4,10 @@
     margin-top: 12px;
     padding: 8px;
 }
+
+.loading {
+    background-color: #33ff33;
+    color: #333;
+    margin-top: 12px;
+    padding: 8px;
+}

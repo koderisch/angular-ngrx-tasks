@@ -2,6 +2,7 @@ import Globals from '../lib/globals'; // load global variables
 const globals = new Globals();
 
 import { MongoClient } from 'mongodb';
+import assert from 'assert';
 
 export default class TasksDb {
   /**
@@ -71,6 +72,32 @@ export default class TasksDb {
     }
   }
 
+  /**
+   * Insert a document into Mongo collection
+   * @method insert
+   * @async
+   *
+   * @param {string} collection - name of collection
+   * @param {object} Data - data object containing the document to add
+   */
+  async insert(collection: string, Data: any) {
+    const client = await this.connect();
+    const db = client.db(globals.mongoDbName);
+
+    try {
+      // Insert a single document
+      const r = await db.collection(collection).insertOne(Data);
+      assert.equal(1, r.insertedCount);
+      return r;
+    } catch (err) {
+      // tslint:disable-next-line:no-console
+      console.error(err.stack);
+    } finally {
+      // Close connection
+      client.close();
+    }
+  }
+
   getAll() {
     return new Promise((resolve, reject) => {
       const collection = 'tasks';
@@ -102,6 +129,22 @@ export default class TasksDb {
         })
         .then(result => {
           resolve(result);
+        });
+    });
+  }
+
+  addTask(taskId: string, taskName: string) {
+    return new Promise((resolve, reject) => {
+      const collection = 'tasks';
+      const Data = { task_id: taskId, task_name: taskName, task_status: 0 };
+      this.insert(collection, Data)
+        .catch(err => {
+          // tslint:disable-next-line:no-console
+          console.error('dbase.insert error', err);
+          reject(err);
+        })
+        .then(result => {
+          resolve(Data);
         });
     });
   }
