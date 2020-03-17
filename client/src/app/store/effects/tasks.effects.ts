@@ -13,15 +13,24 @@ import {
   UnAssignTaskAction,
   UnAssignTaskFailureAction,
   UnAssignTaskSuccessAction,
+  StoreUserAction,
+  RemoveUserAction,
   AddTaskAction,
   AddTaskSuccessAction,
   AddTaskFailureAction,
 } from '../actions/tasks.actions';
 import { of } from 'rxjs';
 import { TasksService } from '../../services/tasks.service';
+import { UsersService } from '../../services/users.service';
 
 @Injectable()
 export class TasksEffects {
+  constructor(
+    private actions$: Actions,
+    private tasksService: TasksService,
+    private usersService: UsersService
+  ) {}
+
   @Effect() loadTasks$ = this.actions$.pipe(
     ofType<LoadTasksAction>(TasksActionTypes.LOAD_TASKS),
     mergeMap(() =>
@@ -58,11 +67,20 @@ export class TasksEffects {
     ofType<AddTaskAction>(TasksActionTypes.ADD_TASK),
     mergeMap(data =>
       this.tasksService.addTask(data.payload).pipe(
-        map((newTask:any) => new AddTaskSuccessAction(newTask)),
+        map((newTask: any) => new AddTaskSuccessAction(newTask)),
         catchError(error => of(new AddTaskFailureAction(error)))
       )
     )
   );
 
-  constructor(private actions$: Actions, private tasksService: TasksService) {}
+  @Effect({ dispatch: false }) storeUser$ = this.actions$.pipe(
+    ofType<StoreUserAction>(TasksActionTypes.STORE_USER),
+    map((data) => this.usersService.storeUserInLocalStorage(data.payload))
+  );
+
+  @Effect({ dispatch: false }) removeUser$ = this.actions$.pipe(
+    ofType<RemoveUserAction>(TasksActionTypes.REMOVE_USER),
+    map(() => this.usersService.removeUserFromLocalStorage())
+  );
+
 }

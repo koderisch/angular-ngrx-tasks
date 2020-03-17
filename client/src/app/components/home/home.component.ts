@@ -7,10 +7,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/models/app-state.model';
-import {
-  StoreUserAction,
-  RemoveUserAction,
-} from 'src/app/store/actions/tasks.actions';
+import { StoreUserAction } from 'src/app/store/actions/tasks.actions';
 
 @Component({
   selector: 'app-home',
@@ -36,16 +33,13 @@ export class HomeComponent implements OnInit {
   getUsers(): void {
     this.usersService.getAll().subscribe(users => (this.users = users));
   }
-  async logOutUser() {
-    this.store.dispatch(new RemoveUserAction());
-  }
   logInUser() {
     this.usersService.logIn(this.credentials).subscribe(user => {
       this.logInSuccess(user);
     });
   }
 
-  showError(err:string) {
+  showError(err: string) {
     this.error = err;
   }
 
