@@ -1,8 +1,6 @@
-<div class="row">
-  <div class="col-md-4">
-    <br />
-
-    <div *ngIf="!(user$ | async)">
+<div *ngIf="!(user$ | async)">
+  <div class="row">
+    <div class="col-md-4">
       <form (ngSubmit)="logInUser()" ngNativeValidate>
         <ul class="users">
           <li class="user-item" *ngFor="let user of users; let idx = index">
