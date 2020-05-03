@@ -1,6 +1,8 @@
-# Angular with NgRx - simple task manager
+# Angular with NgRx - Simple Task Manager in TypeScript
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.5.
+
+The aim was to explore Angular with NgRx using Effects for data retrieval and storage in both Mongo and PostgreSQL databases. This project is in currently still progress.
 
 ## Development server
 
