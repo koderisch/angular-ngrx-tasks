@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class Globals {
     constructor() {
         this.mongoDbUrl = "mongodb://localhost:27017";
-        this.mongoDbName = "pbTasks";
-        this.postgreDbUrl = "postgres://michaelk:michaelk@localhost:5432/michaelk";
+        this.mongoDbName = "dbtasks";
+        this.postgreDbUrl = "postgres://user:pass@localhost:5432/dbusers";
     }
 }
 exports.default = Globals;

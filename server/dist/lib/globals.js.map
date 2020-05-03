@@ -1,1 +1,1 @@
-{"version":3,"file":"globals.js","sourceRoot":"","sources":["../../src/lib/globals.ts"],"names":[],"mappings":";;AAAA,MAAqB,OAAO;IAA5B;QACE,eAAU,GAAG,2BAA2B,CAAC;QACzC,gBAAW,GAAG,SAAS,CAAC;QACxB,iBAAY,GAAG,sDAAsD,CAAC;IACxE,CAAC;CAAA;AAJD,0BAIC;AAAA,CAAC"}
+{"version":3,"file":"globals.js","sourceRoot":"","sources":["../../src/lib/globals.ts"],"names":[],"mappings":";;AAAA,MAAqB,OAAO;IAA5B;QACE,eAAU,GAAG,2BAA2B,CAAC;QACzC,gBAAW,GAAG,SAAS,CAAC;QACxB,iBAAY,GAAG,6CAA6C,CAAC;IAC/D,CAAC;CAAA;AAJD,0BAIC;AAAA,CAAC"}

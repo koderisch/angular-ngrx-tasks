@@ -1,4 +1,4 @@
-# PbTasksNgrxAuth
+# Angular with NgRx - simple task manager
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.5.
 
@@ -13,13 +13,13 @@ Run `ng build` within `client/` to build the project. The build artifacts will b
 
 ## Running production version
 
-Run `npm start` within `/` directory. Navigate to `http://localhost:3000/`.
+Run `npm start` within `/` directory. Navigate to `http://localhost:3000/`. This will build both client and server production versions, then start the node server.
 
 ## Databases used
 
 ### Users stored in PostgreSQL database
 
-Database name: michaelk<br/>
+Database name: dbusers<br/>
 Table: users
 
 | column        | type   |
@@ -30,7 +30,7 @@ Table: users
 
 ### Tasks stored in Mongo database
 
-Database name: test<br/>
+Database name: dbtasks<br/>
 Collection name: tasks
 
 | field            | value  |

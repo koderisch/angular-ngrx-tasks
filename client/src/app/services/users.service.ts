@@ -10,7 +10,7 @@ import { User, Credentials } from '../models/user.model';
 @Injectable()
 export class UsersService {
   private apiUrl = `${environment.apiUrl}`;
-  private USER_STORE_KEY = 'pbtasks-user-store';
+  private USER_STORE_KEY = 'tasks-user-store';
 
   constructor(
     private http: HttpClient,

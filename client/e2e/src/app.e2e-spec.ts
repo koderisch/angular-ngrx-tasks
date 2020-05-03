@@ -9,6 +9,6 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to pb-tasks-ngrx-auth!');
+    expect(page.getTitleText()).toEqual('Welcome to angular-ngrx-tasks!');
   });
 });
