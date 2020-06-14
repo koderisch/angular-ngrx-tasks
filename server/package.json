@@ -1,5 +1,4 @@
 {
-  "version": "0.1",
   "main": "dist/app.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
