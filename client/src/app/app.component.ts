@@ -25,8 +25,4 @@ export class AppComponent implements OnInit {
       this.store.dispatch(new StoreUserAction(user));
     }
   }
-
-  getCurrentValue(): Observable<User> {
-    return this.store.select(appState => appState.tasks.user);
-  }
 }
